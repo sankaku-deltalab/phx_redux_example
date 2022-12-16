@@ -1,10 +1,10 @@
-import {ExtendedHookConfig, HookBaseClass, HookConfig} from '../hook-base';
+import {ExtendedHookConfig, HookBaseClass, HookConfig} from './hook-base';
 import React from 'react';
 import {createRoot} from 'react-dom/client';
 import {Provider} from 'react-redux';
 import {store} from '../redux/app/store';
 import {increment, decrement, incrementByAmount} from '../redux/features/example/exampleSlice';
-import App from '../redux/page-components/App';
+import App from '../redux/App';
 
 type Cfg = ExtendedHookConfig<{
   pushEvents: HookConfig['pushEvents'];

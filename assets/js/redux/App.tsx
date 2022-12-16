@@ -1,5 +1,5 @@
 import * as React from 'react';
-import ExampleCounter from './ExampleCounter';
+import ExampleCounter from './page-components/ExampleCounter';
 
 const App: React.FC<{}> = ({}) => {
   return <ExampleCounter />;
