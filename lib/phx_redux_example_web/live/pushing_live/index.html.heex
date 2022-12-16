@@ -1,0 +1,16 @@
+<h1>Listing Users</h1>
+
+<div id="message_container"></div>
+
+<div id="cs" phx-hook="ClientSider"></div>
+
+<form phx-change="validate" phx-submit="send_message_to_client">
+  <input type="text" name="message"/>
+  <%= submit "Send message via handle_event", class: "_anyclass" %>
+</form>
+
+<form phx-change="validate" phx-submit="send_message_to_client">
+  <input hidden name="erace_id" value="message_input"/>
+  <input type="text" id="message_input" name="message" phx-hook="ValueEracable" />
+  <%= submit "Send message via handle_event and erace input", class: "_anyclass"%>
+</form>

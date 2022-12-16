@@ -49,5 +49,3 @@ liveSocket.connect();
 window['liveSocket'] = liveSocket;
 
 modifyWindow(window);
-
-import './react-handler';

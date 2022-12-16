@@ -17,7 +17,8 @@ defmodule PhxReduxExampleWeb.Router do
   scope "/", PhxReduxExampleWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    # get "/", PageController, :index
+    live "/", PushingLive.Index, :index
   end
 
   # Other scopes may use custom stacks.
