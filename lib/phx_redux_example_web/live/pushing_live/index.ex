@@ -36,6 +36,17 @@ defmodule PhxReduxExampleWeb.PushingLive.Index do
   end
 
   @impl true
+  def handle_event("increment_by_amount_client", %{"amount" => amount}, socket)
+      when amount |> is_bitstring() do
+    socket =
+      socket
+      # emit event at ClientSider
+      |> push_event("incAmount", %{"amount" => String.to_integer(amount)})
+
+    {:noreply, socket}
+  end
+
+  @impl true
   def handle_event(
         "send_message_to_client",
         %{"message" => message, "erace_id" => erace_id},

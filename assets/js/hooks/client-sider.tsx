@@ -3,7 +3,7 @@ import React from 'react';
 import {createRoot} from 'react-dom/client';
 import {Provider} from 'react-redux';
 import {store} from '../redux/app/store';
-import {increment, decrement} from '../redux/features/example/exampleSlice';
+import {increment, decrement, incrementByAmount} from '../redux/features/example/exampleSlice';
 import App from '../redux/page-components/App';
 
 type Cfg = ExtendedHookConfig<{
@@ -11,6 +11,7 @@ type Cfg = ExtendedHookConfig<{
   handleEvents: {
     inc: {payload: {}};
     dec: {payload: {}};
+    incAmount: {payload: {amount: number}};
   };
 }>;
 
@@ -31,6 +32,9 @@ export class ClientSider extends HookBaseClass<Cfg> {
     this.handleEvent('dec', ({}) => {
       store.dispatch(decrement());
     });
+    this.handleEvent('incAmount', ({amount}) => {
+      store.dispatch(incrementByAmount(amount));
+    });
   }
 
   private setupClientToServerHandling(): void {
@@ -46,6 +50,9 @@ export class ClientSider extends HookBaseClass<Cfg> {
     });
     this.el.addEventListener('decEl', (e: Ev<{}>) => {
       store.dispatch(decrement());
+    });
+    this.el.addEventListener('incAmountEl', (e: Ev<{amount: number}>) => {
+      store.dispatch(incrementByAmount(e.detail.amount));
     });
   }
 

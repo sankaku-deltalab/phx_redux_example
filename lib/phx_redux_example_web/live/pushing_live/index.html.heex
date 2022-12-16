@@ -4,12 +4,18 @@
 
 <div id="cs" phx-hook="ClientSider"></div>
 
-<div>
-  <button phx-click="increment_client">Inc By Server</button>
-  <button phx-click="decrement_client">Dec By Server</button>
-</div>
 
-<div>
-  <button phx-click={JS.dispatch("incEl", to: "#cs")}>Inc By Client JS</button>
-  <button phx-click={JS.dispatch("decEl", to: "#cs")}>Dec By Client JS</button>
+<div style="margin: 10px; border: solid;">
+  <div>This is liveview element</div>
+  <div>
+    <button phx-click="increment_client">Inc By Server</button>
+    <button phx-click="decrement_client">Dec By Server</button>
+    <button phx-click="increment_by_amount_client" phx-value-amount={3}>Inc 3 By Server</button>
+  </div>
+
+  <div>
+    <button phx-click={JS.dispatch("incEl", to: "#cs")}>Inc By Client JS</button>
+    <button phx-click={JS.dispatch("decEl", to: "#cs")}>Dec By Client JS</button>
+    <button phx-click={JS.dispatch("incAmountEl", to: "#cs", detail: %{"amount" => 3})}>Inc 3 By Client JS</button>
+  </div>
 </div>
