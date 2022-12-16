@@ -4,6 +4,9 @@
 
 <div id="cs" phx-hook="ClientSider"></div>
 
+<button phx-click="increment_client">Inc By Server</button>
+<button phx-click="decrement_client">Dec By Server</button>
+
 <form phx-change="validate" phx-submit="send_message_to_client">
   <input type="text" name="message"/>
   <%= submit "Send message via handle_event", class: "_anyclass" %>

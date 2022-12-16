@@ -15,6 +15,26 @@ defmodule PhxReduxExampleWeb.PushingLive.Index do
   end
 
   @impl true
+  def handle_event("increment_client", _params, socket) do
+    socket =
+      socket
+      # emit event at ClientSider
+      |> push_event("inc", %{})
+
+    {:noreply, socket}
+  end
+
+  @impl true
+  def handle_event("decrement_client", _params, socket) do
+    socket =
+      socket
+      # emit event at ClientSider
+      |> push_event("dec", %{})
+
+    {:noreply, socket}
+  end
+
+  @impl true
   def handle_event(
         "send_message_to_client",
         %{"message" => message, "erace_id" => erace_id},

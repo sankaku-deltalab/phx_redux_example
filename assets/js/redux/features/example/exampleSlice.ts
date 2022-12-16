@@ -28,6 +28,6 @@ export const exampleSlice = createSlice({
 
 export const {increment, decrement, incrementByAmount} = exampleSlice.actions;
 
-export const selectValue = (state: RootState) => state;
+export const selectValue = (state: RootState) => state.example.value;
 
 export default exampleSlice.reducer;

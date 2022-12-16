@@ -4,6 +4,7 @@ import {createRoot} from 'react-dom/client';
 import {Provider} from 'react-redux';
 import {store} from '../redux/app/store';
 import {increment, decrement} from '../redux/features/example/exampleSlice';
+import App from '../redux/page-components/App';
 
 type Cfg = ExtendedHookConfig<{
   pushEvents: HookConfig['pushEvents'];
@@ -44,7 +45,7 @@ export class ClientSider extends HookBaseClass<Cfg> {
     root.render(
       <React.StrictMode>
         <Provider store={store}>
-          <div>This is react element</div>
+          <App />
         </Provider>
       </React.StrictMode>
     );
