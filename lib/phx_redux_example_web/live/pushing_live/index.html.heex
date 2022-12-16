@@ -4,16 +4,12 @@
 
 <div id="cs" phx-hook="ClientSider"></div>
 
-<button phx-click="increment_client">Inc By Server</button>
-<button phx-click="decrement_client">Dec By Server</button>
+<div>
+  <button phx-click="increment_client">Inc By Server</button>
+  <button phx-click="decrement_client">Dec By Server</button>
+</div>
 
-<form phx-change="validate" phx-submit="send_message_to_client">
-  <input type="text" name="message"/>
-  <%= submit "Send message via handle_event", class: "_anyclass" %>
-</form>
-
-<form phx-change="validate" phx-submit="send_message_to_client">
-  <input hidden name="erace_id" value="message_input"/>
-  <input type="text" id="message_input" name="message" phx-hook="ValueEracable" />
-  <%= submit "Send message via handle_event and erace input", class: "_anyclass"%>
-</form>
+<div>
+  <button phx-click={JS.dispatch("incEl", to: "#cs")}>Inc By Client JS</button>
+  <button phx-click={JS.dispatch("decEl", to: "#cs")}>Dec By Client JS</button>
+</div>

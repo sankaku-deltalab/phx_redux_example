@@ -2,6 +2,7 @@ defmodule PhxReduxExampleWeb.PushingLive.Index do
   use PhxReduxExampleWeb, :live_view
   use Phoenix.HTML
   import Phoenix.LiveView
+  alias Phoenix.LiveView.JS
 
   @impl true
   def mount(_params, _session, socket) do

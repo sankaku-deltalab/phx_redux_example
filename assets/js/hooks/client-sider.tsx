@@ -20,6 +20,7 @@ export class ClientSider extends HookBaseClass<Cfg> {
   mounted() {
     this.setupServerToClientHandling();
     this.setupClientToServerHandling();
+    this.setupClientToClientHandling();
     this.setupReact();
   }
 
@@ -36,6 +37,15 @@ export class ClientSider extends HookBaseClass<Cfg> {
     this.el.addEventListener('c2s', (e: Ev<{event: string; payload: Record<string, unknown>}>) => {
       const {event, payload} = e.detail;
       this.pushEvent(event, payload);
+    });
+  }
+
+  private setupClientToClientHandling(): void {
+    this.el.addEventListener('incEl', (e: Ev<{}>) => {
+      store.dispatch(increment());
+    });
+    this.el.addEventListener('decEl', (e: Ev<{}>) => {
+      store.dispatch(decrement());
     });
   }
 
