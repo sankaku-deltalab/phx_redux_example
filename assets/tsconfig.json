@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "declaration": true,
+    "forceConsistentCasingInFileNames": true,
+    "lib": ["es2019", "dom"],
+    "module": "commonjs",
+    "noEmitOnError": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "pretty": true,
+    "sourceMap": true,
+    "strict": false,
+    "target": "es2018",
+    "baseUrl": "./",
+    "paths": {"phoenix_live_view": ["types/phoenix_live_view"]},
+    "typeRoots": ["types", "node_modules/@types"]
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

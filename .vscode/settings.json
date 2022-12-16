@@ -1,0 +1,7 @@
+{
+  "editor.formatOnSave": true,
+  "prettier.configPath": "assets/.prettierrc.json",
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}
