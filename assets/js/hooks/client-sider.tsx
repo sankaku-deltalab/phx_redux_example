@@ -20,6 +20,8 @@ type Cfg = ExtendedHookConfig<{
 type Ev<Payload extends Record<string, unknown>> = Event & {detail: Payload};
 type PushEv<Key extends PushKey<Cfg>> = Event & {detail: {event: Key; payload: PushPayload<Cfg, Key>}};
 
+const clientToServerEvName = 'c2s';
+
 export class ClientSider extends HookBaseClass<Cfg> {
   mounted() {
     this.setupServerToClientHandling();
@@ -41,7 +43,7 @@ export class ClientSider extends HookBaseClass<Cfg> {
   }
 
   private setupClientToServerHandling(): void {
-    this.el.addEventListener('c2s', (e: PushEv<PushKey<Cfg>>) => {
+    this.el.addEventListener(clientToServerEvName, (e: PushEv<PushKey<Cfg>>) => {
       const {event, payload} = e.detail;
       this.pushEvent(event, payload);
     });
@@ -81,7 +83,9 @@ export class ClientSider extends HookBaseClass<Cfg> {
     // and other hooks can call this via `JS.dispatch`
     // https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.JS.html#module-custom-js-events-with-js-dispatch-1-and-window-addeventlistener
     const detail = {event, payload};
-    const ev = new CustomEvent('c2s', {detail});
-    document.getElementById(id)!.dispatchEvent(ev);
+    const ev = new CustomEvent(clientToServerEvName, {detail});
+    const clientSiderElement = document.getElementById(id);
+    if (clientSiderElement === null) throw new Error(`ClientSider element not found. Element id is "${id}"`);
+    clientSiderElement.dispatchEvent(ev);
   }
 }
