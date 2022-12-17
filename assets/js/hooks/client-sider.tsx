@@ -50,6 +50,8 @@ export class ClientSider extends HookBaseClass<Cfg> {
   }
 
   private setupClientToClientHandling(): void {
+    // Other DOM elements can emit them via `JS.dispatch`
+    // https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.JS.html#module-custom-js-events-with-js-dispatch-1-and-window-addeventlistener
     this.el.addEventListener('incEl', (e: Ev<{}>) => {
       store.dispatch(increment());
     });
@@ -79,9 +81,7 @@ export class ClientSider extends HookBaseClass<Cfg> {
   }
 
   static sendMessageToServer<Key extends PushKey<Cfg>>(id: string, event: Key, payload: PushPayload<Cfg, Key>): void {
-    // redux can call this function
-    // and other hooks can call this via `JS.dispatch`
-    // https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.JS.html#module-custom-js-events-with-js-dispatch-1-and-window-addeventlistener
+    // redux thunk action can call this function
     const detail = {event, payload};
     const ev = new CustomEvent(clientToServerEvName, {detail});
     const clientSiderElement = document.getElementById(id);
