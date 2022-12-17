@@ -9,6 +9,29 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
+## Architecture
+
+```mermaid
+graph TD
+  subgraph client[Client]
+    redux[Redux and React]
+    hook[Client hooks\n`ClientSider`]
+    el_with_dispatch[DOM Element]
+  end
+
+  subgraph server[Server]
+    phx[Phoenix Liveview]
+  end
+
+  phx --> |push_event| hook  --> |dispatch| redux
+  redux --> |ClientSider.sendMessageToServer| hook --> |pushEvent| phx
+  el_with_dispatch --> |JS.dispatch| hook
+
+
+  click hook "https://hexdocs.pm/phoenix_live_view/js-interop.html#client-hooks-via-phx-hook"
+  click el_with_dispatch "https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.JS.html#dispatch/2"
+```
+
 ## How to copy redux system to your repo
 
 1. Clone this repo.
