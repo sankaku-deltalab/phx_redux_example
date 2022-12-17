@@ -1,4 +1,4 @@
-import {ExtendedHookConfig, HookBaseClass, HookConfig} from './hook-base';
+import {ExtendedHookConfig, HookBaseClass, HookConfig, PushKey, PushPayload} from './hook-base';
 import React from 'react';
 import {createRoot} from 'react-dom/client';
 import {Provider} from 'react-redux';
@@ -7,7 +7,9 @@ import {increment, decrement, incrementByAmount} from '../redux/features/example
 import App from '../redux/App';
 
 type Cfg = ExtendedHookConfig<{
-  pushEvents: HookConfig['pushEvents'];
+  pushEvents: {
+    countOver10: {payload: {count: number}};
+  };
   handleEvents: {
     inc: {payload: {}};
     dec: {payload: {}};
@@ -16,6 +18,7 @@ type Cfg = ExtendedHookConfig<{
 }>;
 
 type Ev<Payload extends Record<string, unknown>> = Event & {detail: Payload};
+type PushEv<Key extends PushKey<Cfg>> = Event & {detail: {event: Key; payload: PushPayload<Cfg, Key>}};
 
 export class ClientSider extends HookBaseClass<Cfg> {
   mounted() {
@@ -38,7 +41,7 @@ export class ClientSider extends HookBaseClass<Cfg> {
   }
 
   private setupClientToServerHandling(): void {
-    this.el.addEventListener('c2s', (e: Ev<{event: string; payload: Record<string, unknown>}>) => {
+    this.el.addEventListener('c2s', (e: PushEv<PushKey<Cfg>>) => {
       const {event, payload} = e.detail;
       this.pushEvent(event, payload);
     });
@@ -73,7 +76,7 @@ export class ClientSider extends HookBaseClass<Cfg> {
     root.unmount();
   }
 
-  static sendMessageToServer(id: string, event: string, payload: {}): void {
+  static sendMessageToServer<Key extends PushKey<Cfg>>(id: string, event: Key, payload: PushPayload<Cfg, Key>): void {
     // redux can call this function
     // and other hooks can call this via `JS.dispatch`
     // https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.JS.html#module-custom-js-events-with-js-dispatch-1-and-window-addeventlistener
