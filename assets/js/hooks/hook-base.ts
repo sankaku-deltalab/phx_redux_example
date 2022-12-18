@@ -74,9 +74,9 @@ export abstract class HookBaseClass<Cfg extends HookConfig = HookConfig> impleme
   recconected(): void {}
 
   static asHook(): Object {
-    const obj = this.prototype;
+    const obj = this.prototype as Object;
     const names = Object.getOwnPropertyNames(obj);
-    const entiries = names.map(n => [n, obj[n]]);
+    const entiries = names.map<[string, unknown]>(n => [n, (obj as Rec<unknown>)[n]]);
     return Object.fromEntries(entiries);
   }
 }

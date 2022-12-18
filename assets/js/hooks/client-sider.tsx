@@ -43,8 +43,9 @@ export class ClientSider extends HookBaseClass<Cfg> {
   }
 
   private setupClientToServerHandling(): void {
-    this.el.addEventListener(clientToServerEvName, (e: PushEv<PushKey<Cfg>>) => {
-      const {event, payload} = e.detail;
+    this.el.addEventListener(clientToServerEvName, e => {
+      const ev = e as PushEv<PushKey<Cfg>>;
+      const {event, payload} = ev.detail;
       this.pushEvent(event, payload);
     });
   }
@@ -52,14 +53,15 @@ export class ClientSider extends HookBaseClass<Cfg> {
   private setupClientToClientHandling(): void {
     // Other DOM elements can emit them via `JS.dispatch`
     // https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.JS.html#module-custom-js-events-with-js-dispatch-1-and-window-addeventlistener
-    this.el.addEventListener('incEl', (e: Ev<{}>) => {
+    this.el.addEventListener('incEl', () => {
       store.dispatch(increment());
     });
-    this.el.addEventListener('decEl', (e: Ev<{}>) => {
+    this.el.addEventListener('decEl', () => {
       store.dispatch(decrement());
     });
-    this.el.addEventListener('incAmountEl', (e: Ev<{amount: number}>) => {
-      store.dispatch(incrementByAmount(e.detail.amount));
+    this.el.addEventListener('incAmountEl', e => {
+      const ev = e as Ev<{amount: number}>;
+      store.dispatch(incrementByAmount(ev.detail.amount));
     });
   }
 
